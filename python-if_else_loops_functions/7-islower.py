@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 def islowe(c):
-    token = ord(c)
-    for i in range(97, 122):
-        if token == i:
-            return True
+    check = ord(c)
+    if 97 <= check <= 122:
+        return True
+    else:
         return False
