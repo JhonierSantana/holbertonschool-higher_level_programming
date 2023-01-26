@@ -1,4 +1,4 @@
 #!/usr/bin/python3
-i = alf
+i = chr
 for i in range(ord('a'), ord('z') + 1):
-    print("{}" .format(alf(i)), end="")
+    print("{}" .format(chr(i)), end="")
