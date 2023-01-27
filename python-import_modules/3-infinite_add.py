@@ -5,6 +5,6 @@ if __name__ == "__main__":
     i = 1
     argc = len(sys.argv)
     while (i < argc):
-        sum += int(sys.argv)
+        sum += int(sys.argv[i])
         i += 1
     print("{:d".format(sum))
