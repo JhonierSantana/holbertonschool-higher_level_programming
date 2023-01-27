@@ -5,5 +5,5 @@ def uppercase(str):
             dif = str[upp]
             dif = ord(dif) - 32
             dif = chr(dif)
-            str = str[:upp] + dif + str[upp + 1:]
+            str = str[:upp] + dif + str[upp:]
         print('{}'.format(str))
