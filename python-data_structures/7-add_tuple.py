@@ -12,5 +12,5 @@ def add_tuple(tuple_a=(), tuple_b=()):
         addend_2 = (tuple_b[0], 0)
     if (len(tuple_b) == 0):
         addend_2 = (0, 0)
-    addition = (addend_1[0] + addend_2[0], addend_1[1], addend_2[1])
+    addition = (addend_1[0] + addend_2[0], addend_1[1] + addend_2[1])
     return addition
