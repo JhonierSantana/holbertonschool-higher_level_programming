@@ -2,4 +2,4 @@
 """ Firts class"""
 class Square:
     """ Empy Class"""
-    pass
+pass
