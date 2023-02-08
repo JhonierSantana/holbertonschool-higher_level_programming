@@ -1,13 +1,13 @@
 #!/usr/bin/python3
 """Add integer"""
 def add_integer(a, b=98):
-    """Arguments:
-    a: First number to add (int or float)
-    b: Second number to add (int or float)
-    
+    """Arguments
+        a: First number to add (int or float)
+        b: Second number to add (int or float)
+        
     Returns:
-        int: The sum of both numbers casted to integers.
-        TypeErorr if a or b is not a number
+        int: The sum of both numbers casted to integers
+        TypeError if a or b is not a number
     """
     
     if isinstance(a, int) is False and isinstance(a, float) is False:
