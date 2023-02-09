@@ -8,7 +8,7 @@
 def say_my_name(first_name, last_name=""):
     """
         say_my_name - prints My name is <first name> <last name>
-    
+
         Arguments:
             first_name (str): First name to print.
             last_name (str): Last name to print. Can be blank
