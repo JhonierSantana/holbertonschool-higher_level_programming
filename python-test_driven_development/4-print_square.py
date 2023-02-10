@@ -1,23 +1,14 @@
 #!/usr/bin/python3
-"""
-    Print square:
-    This module prints a square using the # char
-"""
+'''This module will be testing by 4-print_square.txt'''
 
 
 def print_square(size):
-    """
-    print_square - prints a square using the # char
-    Arguments:
-        size (int): Square size
-    """
-    if isinstance(size, int) is False:
+    '''This function prins a square'''
+    if type(size) != int:
         raise TypeError("size must be an integer")
-    if size < 0:
+    elif type(size) == float and size < 0:
+        raise TypeError("size must be an integer")
+    elif size < 0:
         raise ValueError("size must be >= 0")
-    if size == 0:
-        print()
-    for row in range(size):
-        for column in range(size):
-            print("#", end="")
-        print()
+    for area in range(size):
+        print("#" * size)
