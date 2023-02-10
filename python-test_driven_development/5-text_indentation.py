@@ -1,26 +1,23 @@
 #!/usr/bin/python3
-"""
-    Text indentation:
-    Module that idents a text
-"""
+'''This module will be testing by 5-text_indentation.txt'''
 
 
 def text_indentation(text):
-    """ text_identation - Idents a text by adding 2 new lines after chars (.?:)
-        Arguments:
-            text (str): text to ident
-    """
-    if isinstance(text, str) is False:
+    '''this function format a text using ., ? and :'''
+    if not isinstance(text, str):
         raise TypeError("text must be a string")
-    i = 0
-    chars = ".?:"
-    while (i < len(text)):
-        if text[i] in chars:
-            print(text[i], end="\n\n")
-            if i < (len(text) - 1) and text[i + 1] == " ":
-                i += 2
-            else:
-                i += 1
-        else:
-            print(text[i], end="")
-            i += 1
+
+    ind = 0
+    while ind < len(text) and text[ind] == ' ':
+        ind += 1
+
+    while ind < len(text):
+        print(text[ind], end="")
+        if text[ind] == "\n" or text[ind] in ".?:":
+            if text[ind] in ".?:":
+                print("\n")
+            ind += 1
+            while ind < len(text) and text[ind] == ' ':
+                ind += 1
+            continue
+        ind += 1
