@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """ Modue to return a list"""
 
+
 def lookup(obj):
     """
         lookup - Return a list with object's attributes and method
