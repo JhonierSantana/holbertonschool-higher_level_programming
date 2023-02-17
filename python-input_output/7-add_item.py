@@ -1,4 +1,8 @@
 #!/usr/bin/python3
+"""
+    Script to save arguments to a file
+"""
+
 import sys
 import json
 from typing import List
