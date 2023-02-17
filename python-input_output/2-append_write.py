@@ -4,9 +4,9 @@
 """
 
 
-def write_file(filename="", text=""):
+def append_write(filename="", text=""):
     """
-        write_file - writes some text on a file. This doesn't overwrite the
+        append_write - writes some text on a file. This doesn't overwrite the
         content of the file.
     """
     with open(filename, encoding='utf-8', mode='a') as file:
