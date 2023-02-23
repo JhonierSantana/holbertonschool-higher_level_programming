@@ -54,7 +54,7 @@ class Base:
 
     @classmethod
     def load_from_file(cls):
-        ret = []
+        list4 = []
         try:
             with open("{}.json".format(cls.__name__), 'r') as file:
                 str_list = file.read()
@@ -63,5 +63,5 @@ class Base:
             dict_list = dict()
         for obj_dict in dict_list:
             new_obj = cls.create(**obj_dict)
-            ret.append(new_obj)
-        return(ret)
+            list4.append(new_obj)
+        return(list4)
