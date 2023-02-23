@@ -22,5 +22,8 @@ class Base:
     @staticmethod
     def to_json_string(list_dictionaries):
         list = []
-        if list is None:
-            return(json.loads(list_dictionaries))
+        if list_dictionaries:
+            for element in list_dictionaries:
+                list.append(element)
+        return(json.dumps(list))
+
