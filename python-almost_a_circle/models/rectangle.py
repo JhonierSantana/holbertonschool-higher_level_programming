@@ -116,4 +116,4 @@ class Rectangle(Base):
                 self.y = args[4]
         elif(kwards):
             for (key, value) in kwards.items():
-                setattr(self, key, value)    
+                setattr(self, key, value)
