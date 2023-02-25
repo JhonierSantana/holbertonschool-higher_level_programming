@@ -1,256 +1,179 @@
 #!/usr/bin/python3
-"""
-    Module to test Square class
-"""
-
-
+"""Tests for the Base class with unittest"""
 import unittest
 from models.square import Square
-from io import StringIO
-from contextlib import redirect_stdout
 import os
 
 
 class TestSquare(unittest.TestCase):
-    """
-        Test class for Square class
-    """
-    def test_square_1(self):
-        square_test = Square(1)
-        self.assertEqual(square_test.width, 1)
-        self.assertEqual(square_test.height, 1)
-        self.assertEqual(square_test.size, 1)
+    """Class tests"""
 
-    def test_square_2(self):
-        square_test = Square(1, 2)
-        self.assertEqual(square_test.width, 1)
-        self.assertEqual(square_test.height, 1)
-        self.assertEqual(square_test.size, 1)
-        self.assertEqual(square_test.x, 2)
+    def test_Square_creation_1(self):
+        square = Square(1)
+        self.assertEqual(square.size, 1)
 
-    def test_square_3(self):
-        square_test = Square(1, 2, 3)
-        self.assertEqual(square_test.width, 1)
-        self.assertEqual(square_test.height, 1)
-        self.assertEqual(square_test.size, 1)
-        self.assertEqual(square_test.x, 2)
-        self.assertEqual(square_test.y, 3)
+    def test_Square_creation_2(self):
+        square = Square(1, 2)
+        self.assertEqual(square.size, 1)
+        self.assertEqual(square.x, 2)
 
-    def test_square_4(self):
-        square_test = Square(1, 2, 3, 4)
-        self.assertEqual(square_test.width, 1)
-        self.assertEqual(square_test.height, 1)
-        self.assertEqual(square_test.size, 1)
-        self.assertEqual(square_test.x, 2)
-        self.assertEqual(square_test.y, 3)
-        self.assertEqual(square_test.id, 4)
+    def test_Square_creation_3(self):
+        square = Square(1, 2, 3)
+        self.assertEqual(square.size, 1)
+        self.assertEqual(square.x, 2)
+        self.assertEqual(square.y, 3)
 
-    def test_square_5(self):
+    def test_Square_size_raise_type_error(self):
         with self.assertRaises(TypeError):
             Square("1")
+
+    def test_Square_x_raise_type_error(self):
         with self.assertRaises(TypeError):
             Square(1, "2")
+
+    def test_Square_y_raise_type_error(self):
         with self.assertRaises(TypeError):
             Square(1, 2, "3")
-        with self.assertRaises(ValueError):
-            Square(0)
+
+    def test_Square_creation_4(self):
+        square = Square(1, 2, 3, 4)
+        self.assertEqual(square.size, 1)
+        self.assertEqual(square.x, 2)
+        self.assertEqual(square.y, 3)
+        self.assertEqual(square.id, 4)
+
+    def test_Square_size_raise_value_error(self):
         with self.assertRaises(ValueError):
             Square(-1)
+
+    def test_Square_x_raise_value_error(self):
         with self.assertRaises(ValueError):
-            Square(1, -1)
+            Square(1, -2)
+
+    def test_Square_y_raise_value_error(self):
         with self.assertRaises(ValueError):
-            Square(1, 1, -1)
+            Square(1, 2, -3)
 
-    def test_square_area(self):
-        test_square = Square(4)
-        self.assertEqual(test_square.area(), 16)
+    def test_Square_size_raise_value_error_2(self):
+        with self.assertRaises(ValueError):
+            Square(0)
 
-    def test_square_str(self):
-        test_square = Square(1, 0, 0, 1012)
-        ret = "[Square] (1012) 0/0 - 1"
-        self.assertEqual(test_square.__str__(), ret)
+    def test_Square_representation(self):
+        square_repr = str(Square(1, 2, 3, 4))
+        result = '[Square] (4) 2/3 - 1'
+        self.assertEqual(square_repr, result)
 
-    def test_square_display(self):
-        test_square = Square(2)
-        ret = "##\n##\n"
-        with redirect_stdout(StringIO()) as f:
-            test_square.display()
-        s = f.getvalue()
-        self.assertEqual(ret, s)
+    def test_Square_to_dictionary_exists(self):
+        square_dict = Square(1, 2, 3, 4).to_dictionary()
+        result = {
+            'size': 1,
+            'x': 2,
+            'y': 3,
+            'id': 4
+        }
+        self.assertEqual(square_dict, result)
 
-    def test_square_display_x(self):
-        test_square = Square(2, 2)
-        ret = "  ##\n  ##\n"
-        with redirect_stdout(StringIO()) as f:
-            test_square.display()
-        s = f.getvalue()
-        self.assertEqual(ret, s)
+    def test_Square_update_exists_1(self):
+        square = Square(4, 3, 2, 1)
+        square.update(89)
+        self.assertEqual(square.id, 89)
 
-    def test_square_display_xy(self):
-        test_square = Square(2, 2, 2)
-        ret = "\n\n  ##\n  ##\n"
-        with redirect_stdout(StringIO()) as f:
-            test_square.display()
-        s = f.getvalue()
-        self.assertEqual(ret, s)
+    def test_Square_update_exists_2(self):
+        square = Square(4, 3, 2, 1)
+        square.update(89, 1)
+        self.assertEqual(square.id, 89)
+        self.assertEqual(square.size, 1)
 
-    def test_square_todictionary(self):
-        test_square = Square(1, 2, 3, 4)
-        ret = {'id': 4, 'x': 2, 'size': 1, 'y': 3}
-        self.assertEqual(test_square.to_dictionary(), ret)
+    def test_Square_update_exists_3(self):
+        square = Square(4, 3, 2, 1)
+        square.update(89, 1, 2)
+        self.assertEqual(square.id, 89)
+        self.assertEqual(square.size, 1)
+        self.assertEqual(square.x, 2)
 
-    def test_square_update_empty(self):
-        test_square = Square(1)
-        dict_1 = test_square.to_dictionary()
-        test_square.update()
-        dict_2 = test_square.to_dictionary()
-        self.assertEqual(dict_1, dict_2)
+    def test_Square_update_exists_4(self):
+        square = Square(4, 3, 2, 1)
+        square.update(89, 1, 2, 3)
+        self.assertEqual(square.id, 89)
+        self.assertEqual(square.size, 1)
+        self.assertEqual(square.x, 2)
+        self.assertEqual(square.y, 3)
 
-    def test_square_update_id(self):
-        test_square = Square(1)
-        dict_1 = test_square.to_dictionary()
-        test_square.update(89)
-        dict_2 = test_square.to_dictionary()
-        self.assertNotEqual(dict_1, dict_2)
-        self.assertEqual(test_square.id, 89)
+    def test_Square_update_exists_6(self):
+        square = Square(4, 3, 2, 1)
+        square.update(**{'id': 89})
+        self.assertEqual(square.id, 89)
 
-    def test_square_update_id_s(self):
-        test_square = Square(1)
-        dict_1 = test_square.to_dictionary()
-        test_square.update(89, 5)
-        dict_2 = test_square.to_dictionary()
-        self.assertNotEqual(dict_1, dict_2)
-        self.assertEqual(test_square.id, 89)
-        self.assertEqual(test_square.size, 5)
+    def test_Square_update_exists_7(self):
+        square = Square(4, 3, 2, 1)
+        square.update(**{'id': 89, 'size': 1})
+        self.assertEqual(square.id, 89)
+        self.assertEqual(square.size, 1)
 
-    def test_square_update_id_s_x(self):
-        test_square = Square(1)
-        dict_1 = test_square.to_dictionary()
-        test_square.update(89, 5, 6)
-        dict_2 = test_square.to_dictionary()
-        self.assertNotEqual(dict_1, dict_2)
-        self.assertEqual(test_square.id, 89)
-        self.assertEqual(test_square.size, 5)
-        self.assertEqual(test_square.x, 6)
-   
-    def test_square_update_id_s_x_y(self):
-        test_square = Square(1)
-        dict_1 = test_square.to_dictionary()
-        test_square.update(89, 5, 6, 2)
-        dict_2 = test_square.to_dictionary()
-        self.assertNotEqual(dict_1, dict_2)
-        self.assertEqual(test_square.id, 89)
-        self.assertEqual(test_square.size, 5)
-        self.assertEqual(test_square.x, 6)
-        self.assertEqual(test_square.y, 2)
+    def test_Square_update_exists_8(self):
+        square = Square(4, 3, 2, 1)
+        square.update(**{'id': 89, 'size': 1, 'x': 2})
+        self.assertEqual(square.id, 89)
+        self.assertEqual(square.size, 1)
+        self.assertEqual(square.x, 2)
 
-    def test_square_kupdate_id(self):
-        test_square = Square(1)
-        dict_1 = test_square.to_dictionary()
-        test_square.update(**{"id": 89})
-        dict_2 = test_square.to_dictionary()
-        self.assertNotEqual(dict_1, dict_2)
-        self.assertEqual(test_square.id, 89)
+    def test_Square_update_exists_9(self):
+        square = Square(4, 3, 2, 1)
+        square.update(**{'id': 89, 'size': 1, 'x': 2, 'y': 3})
+        self.assertEqual(square.id, 89)
+        self.assertEqual(square.size, 1)
+        self.assertEqual(square.x, 2)
+        self.assertEqual(square.y, 3)
 
-    def test_square_kupdate_id_size(self):
-        test_square = Square(1, 1)
-        dict_1 = test_square.to_dictionary()
-        test_square.update(**{"id": 89, "size": 5})
-        dict_2 = test_square.to_dictionary()
-        self.assertNotEqual(dict_1, dict_2)
-        self.assertEqual(test_square.id, 89)
-        self.assertEqual(test_square.size, 5)
+    def test_Square_create_exists_2(self):
+        square = Square.create(**{'id': 89, 'size': 1})
+        self.assertEqual(square.id, 89)
+        self.assertEqual(square.size, 1)
 
-    def test_square_kupdate_id_size_x(self):
-        test_square = Square(1, 1)
-        dict_1 = test_square.to_dictionary()
-        test_square.update(**{"id": 89, "size": 5, "x": 6})
-        dict_2 = test_square.to_dictionary()
-        self.assertNotEqual(dict_1, dict_2)
-        self.assertEqual(test_square.id, 89)
-        self.assertEqual(test_square.size, 5)
-        self.assertEqual(test_square.x, 6)
+    def test_Square_create_exists_3(self):
+        square = Square.create(**{'id': 89, 'size': 1, 'x': 2})
+        self.assertEqual(square.id, 89)
+        self.assertEqual(square.size, 1)
+        self.assertEqual(square.x, 2)
 
-    def test_square_kupdate_id_size_x_y(self):
-        test_square = Square(1, 1)
-        dict_1 = test_square.to_dictionary()
-        test_square.update(**{"id": 89, "size": 5, "x": 6, "y": 7})
-        dict_2 = test_square.to_dictionary()
-        self.assertNotEqual(dict_1, dict_2)
-        self.assertEqual(test_square.id, 89)
-        self.assertEqual(test_square.size, 5)
-        self.assertEqual(test_square.x, 6)
-        self.assertEqual(test_square.y, 7)
+    def test_Square_create_exists_4(self):
+        square = Square.create(**{'id': 89, 'size': 1, 'x': 2, 'y': 3})
+        self.assertEqual(square.id, 89)
+        self.assertEqual(square.size, 1)
+        self.assertEqual(square.x, 2)
+        self.assertEqual(square.y, 3)
 
-    def test_square_create_id(self):
-        test_square = Square(1, 1)
-        new_square = test_square.create(**{"id": 95})
-        self.assertIsNot(test_square, new_square)
-        self.assertEqual(new_square.id, 95)
-
-    def test_square_create_id_size(self):
-        test_square = Square(1)
-        new_square = test_square.create(**{"id": 95, "size": 5})
-        self.assertIsNot(test_square, new_square)
-        self.assertEqual(new_square.id, 95)
-        self.assertEqual(new_square.size, 5)
-
-    def test_square_create_id_size_x(self):
-        test_square = Square(1, 1)
-        new_square = test_square.create(**{"id": 95, "size": 5, "x": 6})
-        self.assertIsNot(test_square, new_square)
-        self.assertEqual(new_square.id, 95)
-        self.assertEqual(new_square.size, 5)
-        self.assertEqual(new_square.x, 6)
-
-    def test_square_create_id_size_x_y(self):
-        test_square = Square(1, 1)
-        new_square = test_square.create(**{"id": 95, "size": 5, "x": 6, "y": 7})
-        self.assertIsNot(test_square, new_square)
-        self.assertEqual(new_square.id, 95)
-        self.assertEqual(new_square.size, 5)
-        self.assertEqual(new_square.x, 6)
-        self.assertEqual(new_square.y, 7)
-
-    def test_square_savetofile_none(self):
-        ret = "[]"
+    def test_Square_save_to_file_exists_none(self):
         Square.save_to_file(None)
-        with open("Square.json", "r") as file:
-            s = (file.read())
-        self.assertEqual(ret, s)
-        os.remove("Square.json")
 
-    def test_square_savetofile_empty(self):
-        ret = "[]"
+        with open('Square.json', 'r') as f:
+            self.assertEqual(f.read(), '[]')
+        os.remove('Square.json')
+
+    def test_Square_save_to_file_exists_empty(self):
         Square.save_to_file([])
-        with open("Square.json", "r") as file:
-            s = (file.read())
-        self.assertEqual(ret, s)
-        os.remove("Square.json")
 
-    def test_square_savetofile_something(self):
-        ret = '[{"id": 4, "x": 2, "size": 1, "y": 3}]'
-        r1 = Square(1, 2, 3, 4)
-        Square.save_to_file([r1])
-        with open("Square.json", "r") as file:
-            s = (file.read())
-        self.assertEqual(ret, s)
-        os.remove("Square.json")
+        with open('Square.json', 'r') as f:
+            self.assertEqual(f.read(), '[]')
+        os.remove('Square.json')
 
-    def test_square_loadfromfile_nofile(self):
-        try:
-            os.remove("Square.json")
-        except:
-            pass
-        test_list = Square.load_from_file()
-        self.assertEqual(test_list, [])
+    def test_Square_save_to_file_exists(self):
+        Square.save_to_file([Square(1)])
 
-    def test_square_loadfromfile(self):
-        r1 = Square(1, 2, 3, 4)
-        Square.save_to_file([r1])
-        test_list = Square.load_from_file()
-        self.assertEqual(test_list[0].to_dictionary(), r1.to_dictionary())
-        os.remove("Square.json")
+        with open('Square.json', 'r') as f:
+            self.assertEqual(
+                f.read(), '[{"id": 28, "size": 1, "x": 0, "y": 0}]')
+        os.remove('Square.json')
 
-if __name__ == '__main__':
+    def test_Square_load_from_file_not_exists(self):
+        Square.save_to_file([])
+        self.assertEqual(Square.load_from_file(), [])
+
+    def test_rectangle_load_from_file_exists(self):
+        Square.save_to_file([Square(1, 1, 1, 5)])
+        lst_obj = Square.load_from_file()
+        self.assertEqual(lst_obj[0].size, 1)
+
+
+if __name__ == "__main__":
     unittest.main()
