@@ -8,7 +8,7 @@ from os import path
 
 
 class Base:
-    """Base"""
+    """Base class"""
 
     __nb__objects = 0
 
