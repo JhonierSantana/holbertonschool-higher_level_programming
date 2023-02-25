@@ -1,16 +1,13 @@
 #!/usr/bin/python3
-"""
-    Module with rectangle class
-"""
+""" Module with rentangle class"""
 
 
 from models.base import Base
 
 
 class Rectangle(Base):
-    """
-        Rectangle class inherit from Base
-    """
+    """Rectangle class inherit from base"""
+
     def __init__(self, width, height, x=0, y=0, id=None):
         super().__init__(id)
         self.width = width
@@ -18,26 +15,22 @@ class Rectangle(Base):
         self.x = x
         self.y = y
 
-    def __str__(self):
-        return "[Rectangle] ({}) {}/{} - {}/{}"\
-            .format(self.id, self.x, self.y, self.width, self.height)
-
     @property
     def width(self):
-        return (self.__width)
+        return self.__width
 
     @width.setter
     def width(self, value):
         if isinstance(value, int) is False:
             raise TypeError("width must be an integer")
         elif value <= 0:
-            raise ValueError("width must be > 0")
+            raise ValueError("width mus be > 0")
         else:
             self.__width = value
 
     @property
     def height(self):
-        return (self.__height)
+        return self.__height
 
     @height.setter
     def height(self, value):
@@ -50,7 +43,7 @@ class Rectangle(Base):
 
     @property
     def x(self):
-        return (self.__x)
+        return self.__x
 
     @x.setter
     def x(self, value):
@@ -63,7 +56,7 @@ class Rectangle(Base):
 
     @property
     def y(self):
-        return (self.__y)
+        return self.__y
 
     @y.setter
     def y(self, value):
@@ -75,48 +68,48 @@ class Rectangle(Base):
             self.__y = value
 
     def area(self):
-        """
-            Return rectangle's area
-        """
-        return (self.width * self.height)
+        """Area rectangle"""
+        return self.width * self.height
 
     def display(self):
-        """
-            Displays the rectangle using # character
-            taking x and y into account
-        """
-        for k in range(self.y):
+        """Display rectangle print #"""
+        for a in range(self.y):
             print()
         for i in range(self.height):
-            for x in range(self.x):
+            for j in range(self.x):
                 print(" ", end="")
-            for j in range(self.width):
+            for e in range(self.width):
                 print("#", end="")
             print()
 
-    def update(self, *args, **kwargs):
-        """
-            Updates the instance with args
-            and kwargs
-        """
-        if (args):
-            if (len(args) >= 1):
+    def __str__(self):
+        return "[Rectangle] ({}) {}/{} - {}/{}".format(
+            self.id, self.x, self.y, self.width, self.height
+        )
+
+    def update(self, *args, **kwards):
+        """Method with *args and **kwards"""
+        if args:
+            if len(args) == 1:
                 self.id = args[0]
-            if (len(args) >= 2):
+            if len(args) == 2:
                 self.width = args[1]
-            if (len(args) >= 3):
+            if len(args) == 3:
                 self.height = args[2]
-            if (len(args) >= 4):
+            if len(args) == 4:
                 self.x = args[3]
-            if (len(args) >= 5):
+            if len(args) == 5:
                 self.y = args[4]
-        elif (kwargs):
-            for (key, value) in kwargs.items():
+        elif kwards:
+            for (key, value) in kwards.items():
                 setattr(self, key, value)
 
     def to_dictionary(self):
-        """
-            Returns the class dictionary
-        """
-        return {'x': self.x, 'y': self.y, 'id': self.id,
-                'height': self.height, 'width': self.width}
+        """Return dictionary of rectangle"""
+        return {
+            "id": self.id,
+            "width": self.width,
+            "height": self.height,
+            "x": self.x,
+            "y": self.y,
+        }
