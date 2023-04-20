@@ -9,9 +9,8 @@ request(argv[2], (error, response, body) => {
   } else {
     fs.writeFile(argv[3], body, 'utf-8', (err) => {
       if (err) {
-        console.log(err)
+        console.log(err);
       }
     });
   }
-
 });
